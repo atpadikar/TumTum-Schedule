@@ -50,9 +50,27 @@ cas.stop = [
     ];
  %Link 
 %LinkNumber Stop1   Stop2  Distance
-% cas.link = [
+
 %     01, 
-%          
+%Signifies a list of stop numbers for each route.          
 cas.route.route1 = [05 06 07 10 11];
 cas.route.route2 = [05 06 04 03 02 01 09 10 11];
 cas.route.route3 = [08 09 10 11];
+
+%LinkNumber (From)Stop1   (To)Stop2  Distance(metres)
+cas.route.link = [
+                        01, 04, 03, 240;%h5->h4
+                        02, 03, 02, 120;%h3->h2-3
+                        03, 02, 01, 200;%h2-3->h1
+                        04, 01, 09, 110;%h1->lib
+                        05, 08, 09, 200;%h15->lib
+                        06, 05, 06, 220;%h12->h7
+                        07, 06, 04, 270;%h7->h5
+                        08, 04, 07, 230,%h5->h11
+                        09, 09, 10, 600;%lib-som
+                        10, 07, 10, 500;%h11-som
+                        11, 10, 11, 080;%som-kresit
+                        
+                        ];
+                        
+                        
