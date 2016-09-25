@@ -1,0 +1,18 @@
+route 1
+h12-h7 : 220 m
+h7-h5 270 m
+h5-h11 230
+h11-som 500
+som kresit 80
+
+route 2
+h5-h4 240 m
+h4-h3+2 = 120 m
+h3+2 h1 200
+h1-lib 110
+lib-som 600
+
+route 3
+h1-h15 260
+h15-lib 200
+
