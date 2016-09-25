@@ -18,24 +18,23 @@ cas.bus = [ 01,  40, 0,  0,  0;
         
 %Stop Data
 %Stop_Number Stop_Name
-cas.stop = [01, 'H1';
-            02, 'H32';
-            03, 'H4';
-            04, 'H5';
-            05, 'H121314';
-            06, 'H679';
-            07, 'H11';
-            08, 'H1516';
-            09, 'Lib';
-            10, 'SOM';
-            11, 'KreSIT'; ];
-            
-        
+% cas.stop = [01, 'H1';
+%             02, 'H32';
+%             03, 'H4';
+%             04, 'H5';
+%             05, 'H121314';
+%             06, 'H679';
+%             07, 'H11';
+%             08, 'H1516';
+%             09, 'Lib';
+%             10, 'SOM';
+%             11, 'KreSIT'; ];
+
+
+%StopNumber 
+%         
  %Link 
 %LinkNumber Stop1   Stop2  Distance
 % cas.link = [
 %     01, 
 %          
-cas.route1 = [05 06 07 10 11];
-cas.route2 = [05 06 04 03 02 01 09 10 11];
-cas.route3 = [08 09 10 11];
