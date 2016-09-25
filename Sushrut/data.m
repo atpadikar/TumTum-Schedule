@@ -53,3 +53,6 @@ cas.stop = [
 % cas.link = [
 %     01, 
 %          
+cas.route1 = [05 06 07 10 11];
+cas.route2 = [05 06 04 03 02 01 09 10 11];
+cas.route3 = [08 09 10 11];
