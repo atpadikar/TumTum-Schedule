@@ -1,3 +1,5 @@
+%bus data
+%bus_no capacity filled_cap current_route current_pos
 cas.bus = [ 01,  40, 0,  0,  0;
             02,  40, 0,  0,  0;
             03,  40, 0,  0,  0;
