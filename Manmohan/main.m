@@ -3,6 +3,8 @@ clear
 %data creation
 load('data.mat');
 cumulativeDistance = 0;
+schedule = [0,0,0] ; % [time , Bus no, route no]
+num = 0 ;
 %buses object creation
 
 %stop timemats
@@ -32,7 +34,7 @@ for t = 1:t_max
         %cas.stop.stop(<1=timeaxis,2=generated students>,timestamp,stop number)
     %% for each bus
         for i=1:num_buses
-            if cas.bus(i,9) == 1%On road bus. bus(i,9) checks status, 1 is on road
+            if cas.bus(i,9) == 1    %On road bus. bus(i,9) checks status, 1 is on road
                 cas.bus(i,8) = cas.bus(i,8) - 1; %reduce time remaining to next stop by 1
                 if cas.bus(i,8) <= 0% which means bus has reached next stop
                     %update bus status
@@ -62,12 +64,21 @@ for t = 1:t_max
                         %changed to moving:
                             %calculate remaining time
                         %changed to inactive
-                            %add to que of inactive buses
+           
+                        
+                      %add to que of inactive buses
+            
+            
             end
         end
+        
     %% SCHEDULE NEW BUSES
     
+    
+    
+    %% f starts here 
          if q.isEmpty()== 0    
+           f = [-430.600 -611.800 -406.400 -432.900 -366.900 -431.300] ;
            for i = 1:6 % calculation of f 
                 fill = 40 ;
 
@@ -109,23 +120,29 @@ for t = 1:t_max
               end
              alloc = q.remove() ;
              cas.bus(alloc,4) = max_i ; 
-             cas.bus(alloc,6) = 1 ; 
+             cas.bus(alloc,9) = 1 ;
+             num = num + 1 ;
+             schedule(num) = [10 + floor(t/60) ,alloc, max_i ] ; % first value is time given by minutes after 8 
              f(max_i) = -500 ; 
 
              else 
                  break ;
              end    
           end  
-           % f value calculation ends here 
+          
 
          end
 
+     %% f value calculation ends here 
     
     
     
     
     
-    
+end
+
+for m=1:num
+    schedule(m)       % output    
 end
 clear t
         
