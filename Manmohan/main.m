@@ -43,7 +43,7 @@ for t = 1:t_max
           if fill > 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) >= 0
            temp = temp + (t-j)*cas.stop.stop(2,j,route{i}(idx));
            %cas.stop.stop(2,j,cas.route.route1(idx)) = 0 ;
-           fill = fill - cas.stop.stop(2,j,cas.route.route1(idx));
+           fill = fill - cas.stop.stop(2,j,route{i}(idx));
            
           elseif fill > 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) < 0
               temp = temp + (t-j)*fill ;
