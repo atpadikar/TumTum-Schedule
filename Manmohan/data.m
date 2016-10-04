@@ -1,20 +1,22 @@
 %bus data
 %bus_no capacity filled_cap current_route current_pos
-cas.bus = [ 01,  40, 0,  0,  0;
-            02,  40, 0,  0,  0;
-            03,  40, 0,  0,  0;
-            04,  40, 0,  0,  0;
-            05,  40, 0,  0,  0;
-            06,  40, 0,  0,  0;
-            07,  40, 0,  0,  0;
-            08,  40, 0,  0,  0;
-            09,  40, 0,  0,  0;
-            10,  40, 0,  0,  0;
-            11,  40, 0,  0,  0;
-            12,  40, 0,  0,  0;
-            13,  40, 0,  0,  0;
-            14,  40, 0,  0,  0;
-            15,  40, 0,  0,  0; ];
+%state_of_bus(1=active, 0=inactive)
+cas.bus = [ 01,  40, 0,  0,  0, 0;
+            02,  40, 0,  0,  0, 0;
+            03,  40, 0,  0,  0, 0;
+            04,  40, 0,  0,  0, 0;
+            05,  40, 0,  0,  0, 0;
+            06,  40, 0,  0,  0, 0;
+            07,  40, 0,  0,  0, 0;
+            08,  40, 0,  0,  0, 0;
+            09,  40, 0,  0,  0, 0;
+            10,  40, 0,  0,  0, 0;
+            11,  40, 0,  0,  0, 0;
+            12,  40, 0,  0,  0, 0;
+            13,  40, 0,  0,  0, 0;
+            14,  40, 0,  0,  0, 0;
+            15,  40, 0,  0,  0, 0;
+            ];
         
 %Stop Data
 %Stop_Number Stop_Name
@@ -77,9 +79,9 @@ end
 
 %     01, 
 %Signifies a list of stop numbers for each route.          
-cas.route.route1 = [05 06 07 10 11];
-cas.route.route2 = [05 06 04 03 02 01 09 10 11];
-cas.route.route3 = [08 09 10 11];
+cas.route.route1 = [05 06 04 07 10 11];%h12-h5-h11-som-kresit
+cas.route.route2 = [05 06 04 03 02 01 09 10 11];%h12-h5-h1-lib-som-kresit
+cas.route.route3 = [08 09 10 11];%15-lib-som-kresit
 
 %LinkNumber (From)Stop1   (To)Stop2  Distance(metres)
 cas.route.link = [
@@ -90,11 +92,14 @@ cas.route.link = [
                         05, 08, 09, 200;%h15->lib
                         06, 05, 06, 220;%h12->h7
                         07, 06, 04, 270;%h7->h5
-                        08, 04, 07, 230,%h5->h11
+                        08, 04, 07, 230;%h5->h11
                         09, 09, 10, 600;%lib-som
                         10, 07, 10, 500;%h11-som
                         11, 10, 11, 080;%som-kresit
                         
                         ];
+
+                    
+
                         
                         
