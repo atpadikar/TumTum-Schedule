@@ -56,8 +56,9 @@ cas.stop.stop = zeros(2,2100,11);%contains the student generation matrix in
 %here, with row 1 as the timestamp and row 2 as the students generated at
 %that time. Second dimention (2100) is the time stamps. Third dimention is
 %the bus stop number.
+t_max = 15*60;
 for i=1:11
-    for t=1:15*60
+    for t=1:t_max
         cas.stop.stop(2,t,i) = (cas.stop.gen(i,3)*(t/60)^2 + cas.stop.gen(i,4)*(t/60))/60;
         if cas.stop.stop(2,t,i)<0
             cas.stop.stop(2,t,i)=0;
