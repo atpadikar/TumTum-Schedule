@@ -1,10 +1,9 @@
 route 1
 h12-h7 : 220 m
 h7-h5 270 m
-h5-h11 230
-h11-som 500
-som kresit 80
-
+h5-h11 230 m 
+h11-som 500 m
+som kresit 80 m
 route 2
 h5-h4 240 m
 h4-h3+2 = 120 m

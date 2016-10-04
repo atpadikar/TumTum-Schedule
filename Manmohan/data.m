@@ -82,6 +82,10 @@ end
 cas.route.route1 = [05 06 04 07 10 11];%h12-h5-h11-som-kresit
 cas.route.route2 = [05 06 04 03 02 01 09 10 11];%h12-h5-h1-lib-som-kresit
 cas.route.route3 = [08 09 10 11];%15-lib-som-kresit
+cas.route.route4 = [03 02 01 09 10 11];%h4-h1-SOM
+cas.route.route5 = [03 04 07 10 11];%H4-H5-H11-SOM
+cas.route.route6 = [08 01 02 03 04 07 10 11]; %H15-H1-H4-H5-H11-SOM
+
 
 %LinkNumber (From)Stop1   (To)Stop2  Distance(metres)
 cas.route.link = [

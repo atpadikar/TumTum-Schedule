@@ -34,6 +34,18 @@ classdef Bus
                 obj.startStop = cas.route.route3(1);
                 obj.stopNo = cas.route.route3(2);
                 obj.firstStop = cas.route.route3(1);
+            elseif routeNo==4
+                obj.startStop = cas.route.route4(1);
+                obj.stopNo = cas.route.route4(2);
+                obj.firstStop = cas.route.route4(1);  
+            elseif routeNo==5
+                obj.startStop = cas.route.route5(1);
+                obj.stopNo = cas.route.route5(2);
+                obj.firstStop = cas.route.route5(1);    
+            elseif routeNo==6
+                obj.startStop = cas.route.route6(1);
+                obj.stopNo = cas.route.route6(2);
+                obj.firstStop = cas.route.route6(1);    
             end
             obj.seatsFilled = 0;
             obj.seatsEmpty = capacity - obj.seatsFilled;
