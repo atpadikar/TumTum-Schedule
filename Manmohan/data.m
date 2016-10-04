@@ -56,8 +56,9 @@ cas.stop.stop = zeros(2,2100,11);%contains the student generation matrix in
 %here, with row 1 as the timestamp and row 2 as the students generated at
 %that time. Second dimention (2100) is the time stamps. Third dimention is
 %the bus stop number.
+t_max = 15*60;
 for i=1:11
-    for t=1:15*60
+    for t=1:t_max
         cas.stop.stop(2,t,i) = (cas.stop.gen(i,3)*(t/60)^2 + cas.stop.gen(i,4)*(t/60))/60;
         if cas.stop.stop(2,t,i)<0
             cas.stop.stop(2,t,i)=0;
@@ -86,6 +87,12 @@ cas.route.route4 = [03 02 01 09 10 11];%h4-h1-SOM
 cas.route.route5 = [03 04 07 10 11];%H4-H5-H11-SOM
 cas.route.route6 = [08 01 02 03 04 07 10 11]; %H15-H1-H4-H5-H11-SOM
 
+route{1} = cas.route.route1;
+route{2} = cas.route.route2;
+route{3} = cas.route.route3;
+route{4} = cas.route.route4;
+route{5} = cas.route.route5;
+route{6} = cas.route.route6;
 
 %LinkNumber (From)Stop1   (To)Stop2  Distance(metres)
 cas.route.link = [

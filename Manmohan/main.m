@@ -31,25 +31,25 @@ for t = 1:t_max
         %WRITE CODE HERE
     %SCHEDULE NEW BUSES
     
-    
-    for i = 1:6 % calculation of f 
+ if q.isEmpty()== 0    
+   for i = 1:6 % calculation of f 
         fill = 40 ;
         
-    for idx = 1:numel(cas.route.route1)% should be routei 
+    for idx = 1:numel(route{i})% should be routei 
         
    
        for j = 1:t
            
-          if fill >= 0 &&  fill - cas.stop.stop(2,j,cas.route.route1(idx)) >= 0
-           temp = temp + (t-j)*cas.stop.stop(2,j,cas.route.route1(idx));
+          if fill > 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) >= 0
+           temp = temp + (t-j)*cas.stop.stop(2,j,route{i}(idx));
            %cas.stop.stop(2,j,cas.route.route1(idx)) = 0 ;
            fill = fill - cas.stop.stop(2,j,cas.route.route1(idx));
            
-          elseif fill >= 0 &&  fill - cas.stop.stop(2,j,cas.route.route1(idx)) < 0
+          elseif fill > 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) < 0
               temp = temp + (t-j)*fill ;
-              cas.stop.stop(2,j,cas.route.route1(idx)) = cas.stop.stop(2,j,cas.route.route1(idx)) - fill ;
+              cas.stop.stop(2,j,route{i}(idx)) = cas.stop.stop(2,j,route{i}(idx)) - fill ;
               fill = 0;
-          
+              break ;
           end 
        end    
        f(i) = f(i) +  temp ;
@@ -58,11 +58,32 @@ for t = 1:t_max
         
     end    
     
-    end  
+   end  
     
+   max = -500 ; max_i = 0;
+   
+   for m=1:6
+     if q.isEmpty() == 0;  
+         
+      for k = 1:6
+        if f(i) > max
+            max = f(i) ; 
+            max_i = i ;         
+        end
+      end
+     alloc = q.remove() ;
+     cas.bus(alloc,4) = max_i ; 
+     cas.bus(alloc,6) = 1 ; 
+     f(max_i) = -500 ; 
+     
+     else 
+         break ;
+     end    
+  end  
+   % f value calculation ends here 
     
-   %if value calculation ends here 
-    
+ end
+   
     
     
     
