@@ -32,9 +32,9 @@ for t = 1:t_max
     %% for each bus stop
         %add students: students are pre added in data. Access from
         %cas.stop.stop(<1=timeaxis,2=generated students>,timestamp,stop number)
-    %% for each bus
+     %% for each bus
         for i=1:num_buses
-            if cas.bus(i,9) == 1    %On road bus. bus(i,9) checks status, 1 is on road
+            if cas.bus(i,9) == 1%On road bus. bus(i,9) checks status, 1 is on road
                 cas.bus(i,8) = cas.bus(i,8) - 1; %reduce time remaining to next stop by 1
                 if cas.bus(i,8) <= 0% which means bus has reached next stop
                     %update bus status
@@ -48,6 +48,15 @@ for t = 1:t_max
                                 break
                             end
                         end 
+                    %if acad area bus, calculate total students boarding
+                    %off
+                        if cas.bus(i,6) == 09
+                            cas.bus(i,10) = round(0.05*cas.bus(i,3));
+                        elseif cas.bus(i,6) ==10
+                            cas.bus(i,10) = round(0.65*cas.bus(i,3));
+                        elseif cas.bus(i,6) ==11
+                            cas.bus(i,10) = cas.bus(i,3);
+                        end
                 end
             elseif cas.bus(i,9) == 2%At stop bus. bus(i,9) checks status, 2 is at stop
                 %Remove/Add students
@@ -64,11 +73,7 @@ for t = 1:t_max
                         %changed to moving:
                             %calculate remaining time
                         %changed to inactive
-           
-                        
-                      %add to que of inactive buses
-            
-            
+                            %add to que of inactive buses
             end
         end
         
