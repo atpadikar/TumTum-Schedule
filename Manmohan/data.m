@@ -1,6 +1,6 @@
 %bus data
-%bus_no capacity filled_cap current_route current_pos
-%state_of_bus(1=active, 0=inactive)
+%bus_no capacity filled_cap current_route current_pos %state_of_bus
+%state of bus (0=inactive, 1=
 cas.bus = [ 01,  40, 0,  0,  0, 0;
             02,  40, 0,  0,  0, 0;
             03,  40, 0,  0,  0, 0;
@@ -99,7 +99,8 @@ cas.route.link = [
                         
                         ];
 
-                    
+clear i t
+
 
                         
                         
