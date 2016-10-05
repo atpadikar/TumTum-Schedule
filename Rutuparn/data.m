@@ -51,6 +51,7 @@ cas.stop.gen = [ %general info about stops
     09, 0, 0, 0, 0, 0, 0, 0, 0 ;
     10, 0, 0, 0, 0, 0, 0, 0, 0 ;
     11, 0, 0, 0, 0, 0, 0, 0, 0 ;
+    
     ];
 
 cas.stop.stop = zeros(2,2100,11);%contains the student generation matrix in
@@ -86,19 +87,19 @@ cas.route.route2 = [05 06 04 03 02 01 09 10 11];%h12-h5-h1-lib-som-kresit
 cas.route.route3 = [08 09 10 11];%15-lib-som-kresit
 cas.route.route4 = [03 02 01 09 10 11];%h4-h1-SOM
 cas.route.route5 = [03 04 07 10 11];%H4-H5-H11-SOM
-cas.route.route6 = [08 01 02 03 04 07 10 11]; %H15-H1-H4-H5-H11-SOM
+%cas.route.route6 = [08 01 02 03 04 07 10 11]; %H15-H1-H4-H5-H11-SOM
 
 route{1} = cas.route.route1;
 route{2} = cas.route.route2;
 route{3} = cas.route.route3;
 route{4} = cas.route.route4;
 route{5} = cas.route.route5;
-route{6} = cas.route.route6;
+%route{6} = cas.route.route6;
 
 %LinkNumber (From)Stop1   (To)Stop2  Distance(metres)
 cas.route.link = [
                         01, 04, 03, 240;%h5->h4
-                        02, 03, 02, 120;%h3->h2-3
+                        02, 03, 02, 120;%h4->h2-3
                         03, 02, 01, 200;%h2-3->h1
                         04, 01, 09, 110;%h1->lib
                         05, 08, 09, 200;%h15->lib

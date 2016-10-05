@@ -1,13 +1,13 @@
-clear
-
+out=[0 0 0 0 0 ];
 %data creation
 load('data.mat');
 cumulativeDistance = 0;
 schedule = [0,0,0] ; % [time , Bus no, route no]
 num = 0 ;
+n=0;
 x=0 ;
 y=0;
-
+t_max = 2001 ;
 %buses object creation
 
 %stop timemats
@@ -78,13 +78,13 @@ for t = 1:t_max
                 for g = 1:t 
                      
                     if  (cas.bus(i,2)-cas.bus(i,3)) > 0 && cas.stop.stop(2,g,y) <= (cas.bus(i,2)-cas.bus(i,3)) 
-                      x = x + cas.stop.stop(2,g,y) ; 
+                     % x = x + cas.stop.stop(2,g,y) ; 
                       cas.bus(i,3) = cas.bus(i,3) +  cas.stop.stop(2,g,y) ;
                       cas.stop.stop(2,g,y) = 0; 
                      
                     
                      elseif ( cas.bus(i,2)-cas.bus(i,3) ) > 0 && cas.stop.stop(2,g,y) > (cas.bus(i,2)-cas.bus(i,3))
-                      x = x + cas.bus(i,2)-cas.bus(i,3) ; 
+                    %  x = x + cas.bus(i,2)-cas.bus(i,3) ; 
                       cas.stop.stop(2,g,y) = cas.stop.stop(2,g,y) - cas.bus(i,2)+cas.bus(i,3); 
                       cas.bus(i,3) = cas.bus(i,2)   ;
                       break; 
@@ -105,7 +105,7 @@ for t = 1:t_max
                                 break
                             end
                         end
-                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ;
+                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_tmp) ;
                         %Set time remaining to reach the destination
                         for lnk_idx = 1:num_links
                             if cas.bus(i,5) == cas.route.link(lnk_idx,2) && cas.bus(i,7) ==cas.route.link(lnk_idx,3)
@@ -132,7 +132,7 @@ for t = 1:t_max
                                 break
                             end
                         end
-                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ; 
+                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_tmp) ; 
                         %Set time remaining to reach the destination
                         for lnk_idx = 1:num_links
                             if cas.bus(i,5) == cas.route.link(lnk_idx,2) && cas.bus(i,7) ==cas.route.link(lnk_idx,3)
@@ -175,26 +175,26 @@ for t = 1:t_max
     
     %% f starts here 
          if q.isEmpty()== 0    
-           f = [-430.600 -611.800 -406.400 -432.900 -366.900 -431.300] ;
-           for i = 1:6 % calculation of f 
+           f = [-430.600 -611.800 -406.400 -432.900 -366.900 ] ; %-431.300 for 6 
+           for i = 1:5 % calculation of f 
                 fill = 40 ;
 
-            for idx = 1:numel(route{i})% should be routei 
+            for idx = 1:numel(route{i})
 
 
                for j = 1:t
 
-                  if fill > 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) >= 0
+                 % if fill > 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) >= 0
                    temp = temp + (t-j)*cas.stop.stop(2,j,route{i}(idx));
                    %cas.stop.stop(2,j,cas.route.route1(idx)) = 0 ;
-                   fill = fill - cas.stop.stop(2,j,route{i}(idx));
+                  % fill = fill - cas.stop.stop(2,j,route{i}(idx));
 
-                  elseif fill > 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) < 0
-                      temp = temp + (t-j)*fill ;
+                  %elseif fill >= 0 &&  fill - cas.stop.stop(2,j,route{i}(idx)) < 0
+                     % temp = temp + (t-j)*fill ;
                       %cas.stop.stop(2,j,route{i}(idx)) = cas.stop.stop(2,j,route{i}(idx)) - fill ;
-                      fill = 0;
-                      break ;
-                  end 
+                    %  fill = 0;
+                     % break ;
+                 % end 
                end    
                f(i) = f(i) +  temp ;
                temp = 0; 
@@ -204,15 +204,16 @@ for t = 1:t_max
 
            end  
 
-           max = -500 ; max_i = 0;
+           max = -1000 ; max_i = 0;
 
-           for m=1:6
+           for m=1:5
              if q.isEmpty() == 0;  
-
-              for k = 1:6
-                if f(i) > max
-                    max = f(i) ; 
-                    max_i = i ;         
+              out = [out;f(i),f(2),f(3),f(4),f(5)];
+              for k = 1:5
+                if f(k) > max
+                    max = f(k) ; 
+                    max_i = k ;  
+                    
                 end
               end
              alloc = q.remove() ;
@@ -228,6 +229,7 @@ for t = 1:t_max
                         end
                         
              cas.bus(alloc,9) = 1 ;
+             cas.bus(alloc,8) = 200 ;
              num = num + 1 ;
              schedule = [schedule;[10 + floor(t/60) ,alloc, max_i ]]; % first value is time given by minutes after 8 
              f(max_i) = -500 ; 
