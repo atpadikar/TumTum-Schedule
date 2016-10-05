@@ -74,8 +74,8 @@ for t = 1:t_max
                      
                     if ( (cas.bus(i,2)-cas.bus(i,3) > 0 && cas.stop.stop(2,g,y) <=cas.bus(i,2)-cas.bus(i,3) )
                       x = x + cas.stop.stop(2,g,y) ; 
-                      cas.stop.stop(2,g,y) = 0; 
                       cas.bus(i,3) = cas.bus(i,3) +  cas.stop.stop(2,g,y) ;
+                      cas.stop.stop(2,g,y) = 0; 
                      
                     
                      elseif ( (cas.bus(i,2)-cas.bus(i,3) > 0 && cas.stop.stop(2,g,y) > cas.bus(i,2)-cas.bus(i,3) )
@@ -101,7 +101,7 @@ for t = 1:t_max
                             end
                         end
                         cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ; 
-                        cas.bus(i,9) == 1 ; 
+                        cas.bus(i,9) = 1 ; 
                         
                    %  elseif (x-cas.bus(i,10))>(cas.bus(i,2)-cas.bus(i,3))
                        
