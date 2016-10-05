@@ -7,7 +7,7 @@ schedule = [0,0,0] ; % [time , Bus no, route no]
 num = 0 ;
 x=0 ;
 y=0;
-t=0;
+
 %buses object creation
 
 %stop timemats
@@ -53,7 +53,7 @@ for t = 1:t_max
                         end 
                     %if acad area bus, calculate total students boarding
                     %off
-                        if cas.bus(i,6) == 09
+                        if cas.bus(i,6) == 09 
                             cas.bus(i,10) = round(0.05*cas.bus(i,3));
                         elseif cas.bus(i,6) ==10
                             cas.bus(i,10) = round(0.65*cas.bus(i,3));
@@ -61,55 +61,73 @@ for t = 1:t_max
                             cas.bus(i,10) = cas.bus(i,3);
                         end
                 end
-            elseif cas.bus(i,9) == 2%At stop bus. bus(i,9) checks status, 2 is at stop
+            elseif cas.bus(i,9) == 2 && cas.bus(i,6) ~= 09 && cas.bus(i,6) ~= 10 && cas.bus(i,6) ~= 11 %At stop bus. bus(i,9) checks status, 2 is at stop
                 y= cas.bus(i,6);
-                t=2100-cas.bus(i,8);
+                
                 %Remove/Add students
-                if cas.bus(i,8)>= 1200
-                    x= cas.stop.gen(y,2)*[ cas.stop.gen(y,3)*t*t+cas.stop.gen(y,4)*t+cas.stop.gen(y,5)];
-                elseif cas.bus(i,8)<1200
-                     x= cas.stop.gen(y,2)*[ cas.stop.gen(y,6)*t*t+cas.stop.gen(y,7)*t+cas.stop.gen(y,8)];
-                end
-                     if (x-cas.bus(i,10))< (cas.bus(i,2)-cas.bus(i,3))
-                         cas.bus(i,8)=cas.bus(i,8)-(x+cas.bus(i,10));
-                         cas.bus(i,3)=cas.bus(i,3)+x-cas.bus(i,10);
+               % if cas.bus(i,8)>= 1200
+                %    x= cas.stop.gen(y,2)*[ cas.stop.gen(y,3)*t*t+cas.stop.gen(y,4)*t+cas.stop.gen(y,5)];
+                %elseif cas.bus(i,8)<1200
+                 %    x= cas.stop.gen(y,2)*[ cas.stop.gen(y,6)*t*t+cas.stop.gen(y,7)*t+cas.stop.gen(y,8)];
+                 x =0 ;
+                for g = 1:t 
+                     
+                    if ( (cas.bus(i,2)-cas.bus(i,3) > 0 && cas.stop.stop(2,g,y) <=cas.bus(i,2)-cas.bus(i,3) )
+                      x = x + cas.stop.stop(2,g,y) ; 
+                      cas.stop.stop(2,g,y) = 0; 
+                      cas.bus(i,3) = cas.bus(i,3) +  cas.stop.stop(2,g,y) ;
+                     
+                    
+                     elseif ( (cas.bus(i,2)-cas.bus(i,3) > 0 && cas.stop.stop(2,g,y) > cas.bus(i,2)-cas.bus(i,3) )
+                      x = x + cas.bus(i,2)-cas.bus(i,3) ; 
+                      cas.stop.stop(2,g,y) = cas.stop.stop(2,g,y) - cas.bus(i,2)+cas.bus(i,3); 
+                      cas.bus(i,3) = cas.bus(i,2)   ;
+                      break; 
+                    end 
+                 end   
+                    
+                     
+                    % if (x-cas.bus(i,10))< (cas.bus(i,2)-cas.bus(i,3))
+                        
+                        % cas.bus(i,3)=cas.bus(i,3)+x-cas.bus(i,10);
                          cas.bus(i,5)=cas.bus(i,6);
                          %to find next stop
-                          nxt_tmp = 0;
+                        nxt_tmp = 0;
                         routelength_tmp = length(route{cas.bus(i,4)});
-                        for tmp = 1:routelength_tmp
-                            if route{cas.bus(i,4)}(tmp) == cas.bus(i,6) && tmp ~= routelength
+                        for tmp = 1:(routelength_tmp -1)
+                            if route{cas.bus(i,4)}(tmp) == cas.bus(i,6) 
                                 nxt_tmp = tmp + 1;
                                 break
                             end
                         end
-                     elseif (x-cas.bus(i,10))>=(cas.bus(i,2)-cas.bus(i,3))
-                         cas.bus(i,8)=cas.bus(i,8)-(cas.bus(i,2)-cas.bus(i,3)+cas.bus(i,10));
-                         cas.bus(i,3)=cas.bus(i,2);
-                         cas.bus(i,5)=cas.bus(i,6);
-                          %to find next stop
-                          nxt_tmp = 0;
+                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ; 
+                        cas.bus(i,9) == 1 ; 
+                        
+                   %  elseif (x-cas.bus(i,10))>(cas.bus(i,2)-cas.bus(i,3))
+                       
+                   %  elseif x==0
+              elseif cas.bus(i,9) == 2 &&( cas.bus(i,6) == 09 || cas.bus(i,6) == 10 ) %Bus stop where students get down          
+                  
+                  
+                  cas.bus(i,3) = cas.bus(i,3) - cas.bus(i,10) ;
+                  cas.bus(i,5) = cas.bus(i,6);
+                  nxt_tmp = 0;
                         routelength_tmp = length(route{cas.bus(i,4)});
-                        for tmp = 1:routelength_tmp
-                            if route{cas.bus(i,4)}(tmp) == cas.bus(i,6) && tmp ~= routelength
+                        for tmp = 1:(routelength_tmp -1)
+                            if route{cas.bus(i,4)}(tmp) == cas.bus(i,6) 
                                 nxt_tmp = tmp + 1;
                                 break
                             end
                         end
-                     elseif x==0
-                         cas.bus(i,3)= cas.bus(i,3)-cas.bus(i,10);
-                         cas.bus(i,8)=cas.bus(i,8)-cas.bus(i,10);
-                         cas.bus(i,5)=cas.bus(i,6);
-                          %to find next stop
-                          nxt_tmp = 0;
-                        routelength_tmp = length(route{cas.bus(i,4)});
-                        for tmp = 1:routelength_tmp
-                            if route{cas.bus(i,4)}(tmp) == cas.bus(i,6) && tmp ~= routelength
-                                nxt_tmp = tmp + 1;
-                                break
-                            end
-                        end
-                     end
+                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ; 
+                        cas.bus(i,9) == 1 ; 
+                        
+                elseif cas.bus(i,9) == 2 &&( cas.bus(i,6) == 11 )        
+                  cas.bus(i,3) = 0 ;
+                  
+                  
+                        cas.bus(i,9) == 0 ; 
+                        q.add(i) ; 
                     %Remove if acad area
                         %if no students to be removed further, run the
                         %required code
@@ -117,16 +135,16 @@ for t = 1:t_max
                         %if no students to be removed further, run the
                         %required code
                         
-                        if cas.bus(i,3)==0
+                      
                             
-                %If students further transporting = 0 (Read flag)
+                    %If students further transporting = 0 (Read flag)
                     %change prev stop and next stop
                     %change status: either to moving or inactive(if last
                     %stop)
                         %changed to moving:
-                            %calculate remaining time
+                        %calculate remaining time
                         %changed to inactive
-                            %add to que of inactive buses
+                        %add to que of inactive buses
             end
         end
         
