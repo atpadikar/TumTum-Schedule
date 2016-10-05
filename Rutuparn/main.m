@@ -19,6 +19,11 @@ y=0;
 
 import java.util.LinkedList
 q = LinkedList();
+for i = 1:15
+q.add(i);
+end
+
+speed_of_bus = 8;%30km/h = 8.333m/s
 
 f = [-430.600 -611.800 -406.400 -432.900 -366.900 -431.300] ; % precalcualted values using -c*d^p for all stops
 fill = 0 ;
@@ -72,13 +77,13 @@ for t = 1:t_max
                  x =0 ;
                 for g = 1:t 
                      
-                    if ( (cas.bus(i,2)-cas.bus(i,3) > 0 && cas.stop.stop(2,g,y) <=cas.bus(i,2)-cas.bus(i,3) )
+                    if  (cas.bus(i,2)-cas.bus(i,3)) > 0 && cas.stop.stop(2,g,y) <= (cas.bus(i,2)-cas.bus(i,3)) 
                       x = x + cas.stop.stop(2,g,y) ; 
                       cas.bus(i,3) = cas.bus(i,3) +  cas.stop.stop(2,g,y) ;
                       cas.stop.stop(2,g,y) = 0; 
                      
                     
-                     elseif ( (cas.bus(i,2)-cas.bus(i,3) > 0 && cas.stop.stop(2,g,y) > cas.bus(i,2)-cas.bus(i,3) )
+                     elseif ( cas.bus(i,2)-cas.bus(i,3) ) > 0 && cas.stop.stop(2,g,y) > (cas.bus(i,2)-cas.bus(i,3))
                       x = x + cas.bus(i,2)-cas.bus(i,3) ; 
                       cas.stop.stop(2,g,y) = cas.stop.stop(2,g,y) - cas.bus(i,2)+cas.bus(i,3); 
                       cas.bus(i,3) = cas.bus(i,2)   ;
@@ -100,7 +105,15 @@ for t = 1:t_max
                                 break
                             end
                         end
-                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ; 
+                        cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ;
+                        %Set time remaining to reach the destination
+                        for lnk_idx = 1:num_links
+                            if cas.bus(i,5) == cas.route.link(lnk_idx,2) && cas.bus(i,7) ==cas.route.link(lnk_idx,3)
+                                cas.bus(i,8) = round(cas.route.link(lnk_idx,4)/speed_of_bus);
+                                break
+                            end
+                        end
+                        
                         cas.bus(i,9) = 1 ; 
                         
                    %  elseif (x-cas.bus(i,10))>(cas.bus(i,2)-cas.bus(i,3))
@@ -120,13 +133,21 @@ for t = 1:t_max
                             end
                         end
                         cas.bus(i,7) = route{cas.bus(i,4)}(nxt_temp) ; 
-                        cas.bus(i,9) == 1 ; 
+                        %Set time remaining to reach the destination
+                        for lnk_idx = 1:num_links
+                            if cas.bus(i,5) == cas.route.link(lnk_idx,2) && cas.bus(i,7) ==cas.route.link(lnk_idx,3)
+                                cas.bus(i,8) = round(cas.route.link(lnk_idx,4)/speed_of_bus);
+                                break
+                            end
+                        end
+                        
+                        cas.bus(i,9) = 1 ; 
                         
                 elseif cas.bus(i,9) == 2 &&( cas.bus(i,6) == 11 )        
                   cas.bus(i,3) = 0 ;
                   
                   
-                        cas.bus(i,9) == 0 ; 
+                        cas.bus(i,9) = 0 ; 
                         q.add(i) ; 
                     %Remove if acad area
                         %if no students to be removed further, run the
@@ -196,9 +217,19 @@ for t = 1:t_max
               end
              alloc = q.remove() ;
              cas.bus(alloc,4) = max_i ; 
+             cas.bus(alloc,5) = cas.bus(alloc,6);
+             cas.bus(alloc,7) = route{cas.bus(alloc,4)}(1) ; 
+             %Set time remaining to reach the destination
+                        for lnk_idx = 1:num_links
+                            if cas.bus(i,5) == cas.route.link(lnk_idx,2) && cas.bus(i,7) ==cas.route.link(lnk_idx,3)
+                                cas.bus(i,8) = round(cas.route.link(lnk_idx,4)/speed_of_bus);
+                                break
+                            end
+                        end
+                        
              cas.bus(alloc,9) = 1 ;
              num = num + 1 ;
-             schedule(num) = [10 + floor(t/60) ,alloc, max_i ] ; % first value is time given by minutes after 8 
+             schedule = [schedule;[10 + floor(t/60) ,alloc, max_i ]]; % first value is time given by minutes after 8 
              f(max_i) = -500 ; 
 
              else 
