@@ -112,8 +112,46 @@ cas.route.link = [
                         
                         ];
 
+                    
+                    
+                    
 clear i t
 
+out=[0 0 0 0 0 ];
+%data creation
 
+cumulativeDistance = 0;
+schedule = [0,0,0] ; % [time , Bus no, route no]
+num = 0 ;
+n=0;
+x=0 ;
+y=0;
+t_max = 2100 ;
+%buses object creation
+
+%stop timemats
+
+%simulation will run from 8:10:00 (not included) to 8:45 (included)
+%at 8:10, t=0 del_t = 1 s
+%Hence 8:45 = 35 min * 60 s = 2100;
+%t_max generated in data.mat
+
+import java.util.LinkedList
+q = LinkedList();
+for i = 1:15
+q.add(i);
+end
+
+speed_of_bus = 8;%30km/h = 8.333m/s
+
+f = [0 0 0 0 0] ; % precalcualted values using -c*d^p for all stops   -430.600 -611.800 -406.400 -432.900 -366.900 -431.300
+fill = 0 ;
+c = .001 ;
+p= 2 ;
+temp = 0;
+
+num_buses = size(cas.bus,1);
+num_links = size(cas.route.link,1);
+busy = [0 0 0 0 0 ] ;
                         
                         
