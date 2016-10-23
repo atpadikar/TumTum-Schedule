@@ -61,11 +61,13 @@ for x = 1:Y
              
 end              
 
+Y = IntAlloc(1) +  IntAlloc(2)+ IntAlloc(3)+ IntAlloc(4)+  IntAlloc(5) ;
+
 for e=1:5
     if IntAlloc(e) > 0
      for m = 1:IntAlloc(e)
-         scheduleS = [scheduleS ;[10 + 5*(m-1) , X , e ]]; % First value gives minutes after 8 when it starts for first time. Then repeats the route every 15 mins.    
-         X = X -1 ;                                    % For a particular route multiple buses run after 5 mins of each other
+         scheduleS = [scheduleS ;[10 + 5*(m-1) , Y , e ]]; % First value gives minutes after 8 when it starts for first time. Then repeats the route every 15 mins.    
+         Y = Y -1 ;                                    % For a particular route multiple buses run after 5 mins of each other
          Total(e) = Total(e) + 1 ;
      end
     end 
